@@ -1,29 +1,29 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+
 import './App.css'
 
-import AnimePage from './Anime'
+import AnimePage from './AnimePage'
+import SearchPage from './SearchPage'
 
 function App() {
 	const [userRequest, setUserRequest] = useState('')
 
 	return (
-		<>
-			<div>
-				<a href="https://vite.dev" target="_blank">
-					<img src={viteLogo} className="logo" alt="Vite logo" />
-				</a>
-				<a href="https://react.dev" target="_blank">
-					<img src={reactLogo} className="logo react" alt="React logo" />
-				</a>
-			</div>
+		<BrowserRouter>
 
-			<input type="text" onChange={(e) => setUserRequest(e.target.value)}/>
-			<p>{userRequest}</p>
+			<nav>
+				<input type="text" onChange={(e) => setUserRequest(e.target.value)} />
+				<Link to={"/search"}>Go to search</Link> | {""}
+				<Link to={"/anime"}>Go to anime</Link>
+			</nav>
 
-			<AnimePage />
-		</>
+			<Routes>
+				<Route path='/' element={<></>}></Route>
+				<Route path='/search' element={<SearchPage id={userRequest} />}></Route>
+				<Route path='/anime' element={<AnimePage id={userRequest} />}></Route>
+			</Routes>
+		</BrowserRouter>
 	)
 }
 
