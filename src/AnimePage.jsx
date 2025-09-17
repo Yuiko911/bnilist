@@ -19,14 +19,21 @@ export default function AnimePage({ id }) {
 
 				<div id="top-content">
 
-					<div id="top-image">
+					<div id="top-image-container">
 						<img src={animedata.coverImage.large} alt="" />
 					</div>
 
 					<div id="top-info">
-						<div id="top-title">
-							<h1>{animedata.title.english}</h1>
-							<h2>{animedata.studios.edges[0].node.name}</h2>
+						<div id="top-metadata">
+							<div id="top-name-and-studio">
+								<h1>{animedata.title.english}</h1>
+								<h2>{animedata.studios.edges[0].node.name}</h2>
+								{/* TODO: Add genres */}
+							</div>
+							<div id="top-rating">
+								<span id="top-rating-rating">{animedata.meanScore/10}</span><span id="top-rating-outof">/10</span>
+							</div>
+
 						</div>
 						<div id="top-description">
 							{animedata.description}
