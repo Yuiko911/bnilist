@@ -1,0 +1,145 @@
+:root {
+	/* z-index: 0; */
+}
+
+
+#top-section {
+	/* background-color: white; */
+	/* z-index: -4; */
+
+	height: 55vh;
+	width: 100vw;
+	
+	position: relative;
+
+}
+
+#top-background {
+	z-index: -4;
+
+	height: 55vh;
+	width: 100vw;
+	
+	position: absolute;
+	top: 0;
+	/* background-color: aqua; */
+}
+
+#top-background > #banner-image-container {
+	z-index: -3;
+	
+	display: block;
+	
+	height: 60%;
+	width: 100vw;
+
+	margin: 0;
+	padding: 0;
+
+	position: relative;
+
+	overflow: hidden;
+}
+
+#top-background > #banner-image-container > img {
+	/* background-color: aqua; */
+
+	height: 100%;
+	width: 100%;
+	
+	position: absolute;
+	top: 0;
+	left: 0;
+	
+	object-fit: cover;
+}
+
+#top-background > #banner-image-container > #banner-image-effects {
+	position: absolute;
+	top: 0;
+	left: 0;
+	
+	height: 100%;
+	width: 100%;
+	
+	position: relative;
+	top: 0;
+
+	backdrop-filter: brightness(85%) blur(7px);
+
+	background: linear-gradient(0deg,rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0) 100%);
+	object-fit: cover;
+}
+
+#top-background > #white-description-background {
+
+	display: inline-block;
+
+	height: 40%;
+	width: 100vw;
+
+	/* No idea why this worked for putting the shadow on top of the image but hey */
+	/* position: relative;
+	top: 0;
+
+	box-shadow: 0 -10px 100px -9px rgba(0, 0, 0, 0.9); */
+
+	background-color: white;
+}
+
+#top-content {
+	background-color: aqua;
+	max-width: 1280px;
+
+	/* position: absolute;
+	top: 0; */
+
+	height: 100%;
+
+	display: flex;
+	flex-flow: row;
+
+	align-items: center;
+
+	/* background-color: aquamarine; */
+}
+
+#top-content #top-image {
+	/* background-color: green; */
+	align-items: center;
+
+	display: flex;
+	justify-content: center;
+
+	height: 100%;
+	width: 25%;
+}
+
+#top-content #top-info {
+	/* background-color: lightgreen; */
+	height: 100%;
+	text-align: left;
+	flex: 1;
+
+}
+
+#top-info {
+	display: flex;
+	flex-direction: column;
+}
+
+#top-title {
+	/* background-color: lime; */
+	height: 50%;
+	
+	display: flex;
+	align-items: center;
+}
+
+#top-description {
+	/* background-color: limegreen; */
+	height: 50%;
+
+	display: flex;
+	align-items: center;
+}

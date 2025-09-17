@@ -12,11 +12,11 @@ function App() {
 	return (
 		<BrowserRouter>
 
-			<nav>
+			{/* <nav id='searchbar'>
 				<input type="text" onChange={(e) => setUserRequest(e.target.value)} />
 				<Link to={"/search"}>Go to search</Link> | {""}
 				<Link to={"/anime"}>Go to anime</Link>
-			</nav>
+			</nav> */}
 
 			<Routes>
 				<Route path='/' element={<></>}></Route>
