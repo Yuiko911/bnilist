@@ -31,7 +31,7 @@ export default function AnimePage({ id }) {
 								{/* TODO: Add genres */}
 							</div>
 							<div id="top-rating">
-								<span id="top-rating-rating">{animedata.meanScore/10}</span><span id="top-rating-outof">/10</span>
+								<span id="top-rating-rating">{animedata.meanScore / 10}</span><span id="top-rating-outof">/10</span>
 							</div>
 
 						</div>
@@ -43,21 +43,26 @@ export default function AnimePage({ id }) {
 			</div>
 
 			<div id="bottom-section">
-				<div>
-					{/* <h3>Duration</h3> */}
-					{/* <p>{animedata.season} {animedata.seasonYear}</p>
+				<div id="bottom-content">
+
+					<div id="bottom-timedata">
+						a
+						{/* <h3>Duration</h3> */}
+						{/* <p>{animedata.season} {animedata.seasonYear}</p>
 					<p>From {animedata.startDate.day}/{animedata.startDate.month}/{animedata.startDate.year}</p>
 					<p>To {animedata.endDate.day}/{animedata.endDate.month}/{animedata.endDate.year}</p>
 					<p>{animedata.episodes} episodes</p> */}
-
-				</div>
-				<div>
-					{/* <h3>Rankings</h3>
+					</div>
+					<div id="bottom-ranking">
+						b
+						{/* <h3>Rankings</h3>
 					{animedata.rankings.map((ranking, i) => <span key={i}>{ranking.rank} | </span>)} */}
-				</div>
-				<div>
-					{/* <h3>Staff</h3> */}
+					</div>
+					<div id="bottom-staff">
+						c
+						{/* <h3>Staff</h3> */}
 
+					</div>
 				</div>
 			</div>
 
