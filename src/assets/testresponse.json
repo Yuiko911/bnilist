@@ -24,30 +24,42 @@
         "year": 2023
       },
       "episodes": 12,
+	  "duration": 24,
       "rankings": [
+		{
+          "type": "RATED",
+          "rank": 429,
+          "season": null,
+          "allTime": true,
+		  "year": 2023
+        },
         {
           "type": "RATED",
           "rank": 51,
           "season": null,
-          "allTime": false
+          "allTime": false,
+		  "year": 2023
         },
         {
           "type": "POPULAR",
           "rank": 62,
           "season": null,
-          "allTime": false
+          "allTime": false,
+		  "year": 2023
         },
         {
           "type": "RATED",
           "rank": 11,
           "season": "WINTER",
-          "allTime": false
+          "allTime": false,
+		  "year": 2023
         },
         {
           "type": "POPULAR",
           "rank": 19,
           "season": "WINTER",
-          "allTime": false
+          "allTime": false,
+		  "year": 2023
         }
       ],
       "meanScore": 75,

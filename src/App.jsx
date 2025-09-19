@@ -21,7 +21,7 @@ function App() {
 			<Routes>
 				<Route path='/' element={<></>}></Route>
 				<Route path='/search' element={<SearchPage id={userRequest} />}></Route>
-				<Route path='/anime' element={<AnimePage id={userRequest} />}></Route>
+				<Route path='/anime/:id' element={<AnimePage id={userRequest} />}></Route>
 			</Routes>
 		</BrowserRouter>
 	)

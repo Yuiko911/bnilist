@@ -1,10 +1,120 @@
+import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
+
 import { data } from "./assets/testresponse.json"
 
+import RankingComponent from "./components/RankingComponent"
 import './AnimePage.css'
 
-export default function AnimePage({ id }) {
+export default function AnimePage() {
+	const { id } = useParams()
+	console.log(id);
 
-	const animedata = data['Media']
+	// TODO: Mettre dans un fichier à part
+	const query = `query Query ($id: Int) {
+	  Media (id: $id) {
+	    id
+
+	    title {
+	      english
+	      native
+	    }
+	    description
+
+	    coverImage {
+	      large
+	    }
+	    bannerImage
+
+	    seasonYear
+	    season
+	    startDate {
+	      day
+	      month
+	      year
+	    }
+	    endDate {
+	      day
+	      month
+	      year
+	    }
+
+	    rankings {
+	      type
+	      rank
+	      season
+	      allTime
+	      year
+	    }
+	    meanScore
+
+	    studios(isMain: true) {
+	      edges {
+	        node {
+	          name
+	        }
+	      }
+	    }
+
+	    genres
+	    episodes
+	    duration
+	  }
+	}
+		`
+
+	// TODO: Mettre un placeholder
+	let [animedata, setAnimeData] = useState(null)
+
+	useEffect(() => {
+		let ignore = false
+
+		const options = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json',
+			},
+			body: JSON.stringify({
+				query: query,
+				variables: {
+					id: id
+				}
+			})
+		}
+
+		setAnimeData(null)
+
+		fetch('https://graphql.anilist.co', options)
+		.then(result => result.json())
+		.then((json) => {
+			if (!ignore) {
+				setAnimeData(json['data']['Media']);
+			}
+		})
+
+
+		return () => {
+			ignore = true;
+		};
+	}, [id])
+
+
+	// Helper functions
+
+	function dateAsString(d, m, y) {
+		const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+		return `${d} ${month[m]} ${y}`
+	}
+
+	function capitalize(t) {
+		return String(t).charAt(0).toUpperCase() + String(t).slice(1).toLocaleLowerCase();
+	}
+
+	if (animedata === null) return <>Loading...</>
+
+	const startDate = dateAsString(animedata.startDate.day, animedata.startDate.month, animedata.startDate.year)
+	const endDate = dateAsString(animedata.endDate.day, animedata.endDate.month, animedata.endDate.year)
 
 	return (
 		<>
@@ -31,13 +141,12 @@ export default function AnimePage({ id }) {
 								{/* TODO: Add genres */}
 							</div>
 							<div id="top-rating">
-								<span id="top-rating-rating">{animedata.meanScore / 10}</span><span id="top-rating-outof">/10</span>
+								<span id="top-rating-rating">⭐ {animedata.meanScore / 10}</span><span id="top-rating-outof">/10</span>
 							</div>
 
 						</div>
-						<div id="top-description">
-							{animedata.description}
-						</div>
+						{/*  >:3c  */}
+						<div id="top-description" dangerouslySetInnerHTML={({__html:animedata.description})} />
 					</div>
 				</div>
 			</div>
@@ -46,22 +155,28 @@ export default function AnimePage({ id }) {
 				<div id="bottom-content">
 
 					<div id="bottom-timedata">
-						a
-						{/* <h3>Duration</h3> */}
-						{/* <p>{animedata.season} {animedata.seasonYear}</p>
-					<p>From {animedata.startDate.day}/{animedata.startDate.month}/{animedata.startDate.year}</p>
-					<p>To {animedata.endDate.day}/{animedata.endDate.month}/{animedata.endDate.year}</p>
-					<p>{animedata.episodes} episodes</p> */}
-					</div>
-					<div id="bottom-ranking">
-						b
-						{/* <h3>Rankings</h3>
-					{animedata.rankings.map((ranking, i) => <span key={i}>{ranking.rank} | </span>)} */}
+						<p className="timedata-sub-title">Season</p>
+						<p className="timedata-text">{capitalize(animedata.season)} {animedata.seasonYear}</p>
+
+						<p className="timedata-sub-title">Start date</p>
+						<p className="timedata-text">{startDate}</p>
+
+						<p className="timedata-sub-title">End date</p>
+						<p className="timedata-text">{endDate}</p>
+
+						<p className="timedata-sub-title">Episodes</p>
+						<p className="timedata-text">{animedata.episodes} episodes</p>
+
+						<p className="timedata-sub-title">Episode Duration</p>
+						<p className="timedata-text">{animedata.duration} minutes</p>
 					</div>
 					<div id="bottom-staff">
-						c
 						{/* <h3>Staff</h3> */}
 
+					</div>
+					<div id="bottom-ranking">
+						{/* TODO: top margin */}
+						{animedata.rankings.map((ranking, i) => <RankingComponent key={i} ranking={ranking} />)}
 					</div>
 				</div>
 			</div>
