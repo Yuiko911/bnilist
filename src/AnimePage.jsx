@@ -1,14 +1,11 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 
-import { data } from "./assets/testresponse.json"
-
 import RankingComponent from "./components/RankingComponent"
 import './AnimePage.css'
 
 export default function AnimePage() {
 	const { id } = useParams()
-	console.log(id);
 
 	// TODO: Mettre dans un fichier à part
 	const query = `query Query ($id: Int) {
@@ -63,7 +60,6 @@ export default function AnimePage() {
 	}
 		`
 
-	// TODO: Mettre un placeholder
 	let [animedata, setAnimeData] = useState(null)
 
 	useEffect(() => {
@@ -85,13 +81,14 @@ export default function AnimePage() {
 
 		setAnimeData(null)
 
+		// TODO: Error handling
 		fetch('https://graphql.anilist.co', options)
-		.then(result => result.json())
-		.then((json) => {
-			if (!ignore) {
-				setAnimeData(json['data']['Media']);
-			}
-		})
+			.then(result => result.json())
+			.then((json) => {
+				if (!ignore) {
+					setAnimeData(json['data']['Media']);
+				}
+			})
 
 
 		return () => {
@@ -99,9 +96,9 @@ export default function AnimePage() {
 		};
 	}, [id])
 
+	if (animedata === null) return LoadingAnimePage()
 
 	// Helper functions
-
 	function dateAsString(d, m, y) {
 		const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 		return `${d} ${month[m]} ${y}`
@@ -111,10 +108,10 @@ export default function AnimePage() {
 		return String(t).charAt(0).toUpperCase() + String(t).slice(1).toLocaleLowerCase();
 	}
 
-	if (animedata === null) return <>Loading...</>
+	let title = animedata.title.english || animedata.title.native
 
-	const startDate = dateAsString(animedata.startDate.day, animedata.startDate.month, animedata.startDate.year)
-	const endDate = dateAsString(animedata.endDate.day, animedata.endDate.month, animedata.endDate.year)
+	let startDate = dateAsString(animedata.startDate.day, animedata.startDate.month, animedata.startDate.year)
+	let endDate = dateAsString(animedata.endDate.day, animedata.endDate.month, animedata.endDate.year)
 
 	return (
 		<>
@@ -130,14 +127,16 @@ export default function AnimePage() {
 				<div id="top-content">
 
 					<div id="top-image-container">
+						{/* TODO: Go to anilist on click + animation */}
 						<img src={animedata.coverImage.large} alt="" />
 					</div>
 
 					<div id="top-info">
 						<div id="top-metadata">
 							<div id="top-name-and-studio">
-								<h1>{animedata.title.english}</h1>
-								<h2>{animedata.studios.edges[0].node.name}</h2>
+								{/* TODO: Switch title type on click */}
+								<h1>{title}</h1>
+								<h2>{animedata.studios.edges[0] ? animedata.studios.edges[0].node.name : ""}</h2>
 								{/* TODO: Add genres */}
 							</div>
 							<div id="top-rating">
@@ -146,7 +145,7 @@ export default function AnimePage() {
 
 						</div>
 						{/*  >:3c  */}
-						<div id="top-description" dangerouslySetInnerHTML={({__html:animedata.description})} />
+						<div id="top-description" dangerouslySetInnerHTML={({ __html: animedata.description })} />
 					</div>
 				</div>
 			</div>
@@ -181,6 +180,14 @@ export default function AnimePage() {
 				</div>
 			</div>
 
+		</>
+	)
+}
+
+function LoadingAnimePage() {
+	return (
+		<>
+		
 		</>
 	)
 }
