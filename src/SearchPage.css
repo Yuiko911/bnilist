@@ -1,0 +1,18 @@
+#cards-container {
+	width: 75%;
+
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	transform: translate(-50%, -0%);
+
+	display: grid;
+
+	grid-template-columns: repeat(auto-fill, 200px);
+	column-gap: 30px;
+	row-gap: 30px;
+
+
+	align-content: space-around;
+	justify-content: space-between;
+}
