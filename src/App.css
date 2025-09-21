@@ -6,6 +6,8 @@
 }
 
 #searchbar {
+	z-index: 999;
+
 	width: fit-content;
 
 	position: fixed;
