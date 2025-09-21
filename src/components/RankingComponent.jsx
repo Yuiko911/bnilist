@@ -11,15 +11,13 @@ export default function RankingComponent({ ranking }) {
 
 	let time_text
 
-	if (ranking.allTime) 
-		// All time
-		time_text = "All Time" 
-	else if (ranking.season == null) 
-		// Year
-		time_text = `${ranking.year}` 
-	else 
-		// Season
-		time_text = `${capitalize(ranking.season)} ${ranking.year}` 
+	if (ranking.allTime) {
+		time_text = "All Time" // All Time
+	} else if (ranking.season == null) {
+		time_text = `${ranking.year}` // Year
+	} else {
+		time_text = `${capitalize(ranking.season)} ${ranking.year}` // Season
+	} 
 	
 	return (
         <div className='ranking-card'>
