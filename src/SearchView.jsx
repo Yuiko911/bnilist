@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 
+import { LoadingPage, FailurePage } from "./StatusPage"
+
 import AnimeCard from './components/AnimeCard'
 
 import './SearchView.css'
@@ -52,12 +54,17 @@ export default function SearchView() {
 
 		// TODO: Error handling
 		fetch('https://graphql.anilist.co', options)
+			.then(result => {
+				console.log(result)
+				if (result.ok) return result
+				else throw new Error(result.status)
+			})
 			.then(result => result.json())
 			.then((json) => {
 				if (!ignore) {
-					setAnimeList(json['data']['Page']['media']);
 					console.log(userSearch)
 					console.log(json['data']['Page']['media'])
+					setAnimeList(json['data']['Page']['media']);
 				}
 			})
 			.catch((reason) => setRequestFailure(reason))
@@ -67,8 +74,8 @@ export default function SearchView() {
 		};
 	}, [userSearch])
 
-	// TODO: Better loading screen
-	if (animelist === null) return
+	if (requestfailure) return FailurePage(requestfailure)
+	if (animelist === null) return LoadingPage()
 
 	return (
 		<>

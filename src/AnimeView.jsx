@@ -1,9 +1,11 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 
+import { LoadingPage, FailurePage } from "./StatusPage"
+
 import RankingComponent from "./components/RankingComponent"
-import './AnimeView.css'
 import GenreComponent from "./components/GenreComponent"
+import './AnimeView.css'
 
 export default function AnimeView() {
 	const { id } = useParams()
@@ -87,6 +89,11 @@ export default function AnimeView() {
 		setAnimeData(null)
 
 		fetch('https://graphql.anilist.co', options)
+			.then(result => {
+				console.log(result)
+				if (result.ok) return result
+				else throw new Error(result.status)
+			})
 			.then(result => result.json())
 			.then((json) => {
 				if (!ignore) {
@@ -95,15 +102,17 @@ export default function AnimeView() {
 					setTitle(json['data']['Media'].title.english)
 				}
 			})
-			.catch((reason) => setRequestFailure(reason))
+			.catch((reason) => {
+				setRequestFailure(reason.message)
+			})
 
 		return () => {
 			ignore = true;
 		};
 	}, [id])
 
-	if (requestfailure != '') return FailureAnimePage(requestfailure)
-	if (animedata === null) return LoadingAnimePage()
+	if (requestfailure) return FailurePage(requestfailure)
+	if (animedata === null) return LoadingPage()
 
 	// Helper functions
 	function dateAsString(d, m, y) {
@@ -209,22 +218,6 @@ export default function AnimeView() {
 				</div>
 			</div>
 
-		</>
-	)
-}
-
-function LoadingAnimePage() {
-	return (
-		<>
-			Loading
-		</>
-	)
-}
-
-function FailureAnimePage(reason) {
-	return (
-		<>
-			awawawaawaw
 		</>
 	)
 }
