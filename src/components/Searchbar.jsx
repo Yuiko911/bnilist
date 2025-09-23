@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Link, useNavigate, createSearchParams } f
 
 import './SearchBar.css'
 
-// TODO: Style
 export default function SearchBar() {
 	const [userRequest, setUserRequest] = useState('')
 	
@@ -19,7 +18,7 @@ export default function SearchBar() {
 				pathname: `/search`,
 				search: `?${createSearchParams(params)}`
 			})
-		}, 1000);
+		}, 750);
 
 		return () => clearTimeout(delaySearch)
 	}, [userRequest])
