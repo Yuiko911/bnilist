@@ -2,10 +2,10 @@ import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 import RankingComponent from "./components/RankingComponent"
-import './AnimePage.css'
+import './AnimeView.css'
 import GenreComponent from "./components/GenreComponent"
 
-export default function AnimePage() {
+export default function AnimeView() {
 	const { id } = useParams()
 
 	const query = `
@@ -65,6 +65,8 @@ export default function AnimePage() {
 	let [animedata, setAnimeData] = useState(null)
 	let [title, setTitle] = useState('')
 
+	let [requestfailure, setRequestFailure] = useState('')
+
 	useEffect(() => {
 		let ignore = false
 
@@ -84,7 +86,6 @@ export default function AnimePage() {
 
 		setAnimeData(null)
 
-		// TODO: Error handling
 		fetch('https://graphql.anilist.co', options)
 			.then(result => result.json())
 			.then((json) => {
@@ -94,12 +95,14 @@ export default function AnimePage() {
 					setTitle(json['data']['Media'].title.english)
 				}
 			})
+			.catch((reason) => setRequestFailure(reason))
 
 		return () => {
 			ignore = true;
 		};
 	}, [id])
 
+	if (requestfailure != '') return FailureAnimePage(requestfailure)
 	if (animedata === null) return LoadingAnimePage()
 
 	// Helper functions
@@ -113,8 +116,6 @@ export default function AnimePage() {
 	function capitalize(t) {
 		return String(t).charAt(0).toUpperCase() + String(t).slice(1).toLocaleLowerCase();
 	}
-
-	// let title = animedata.title.english || animedata.title.native
 
 	// TODO: Add romaji
 	const switchTitle = () => {
@@ -215,7 +216,15 @@ export default function AnimePage() {
 function LoadingAnimePage() {
 	return (
 		<>
+			Loading
+		</>
+	)
+}
 
+function FailureAnimePage(reason) {
+	return (
+		<>
+			awawawaawaw
 		</>
 	)
 }

@@ -4,8 +4,8 @@ import SearchBar from './components/Searchbar'
 
 import './App.css'
 
-import AnimePage from './AnimePage'
-import SearchPage from './SearchPage'
+import AnimeView from './AnimeView'
+import SearchView from './SearchView'
 
 function App() {
 	return (
@@ -17,8 +17,8 @@ function App() {
 
 			<Routes>
 				<Route path='/' element={<></>}></Route>
-				<Route path='/search' element={<SearchPage />}></Route>
-				<Route path='/anime/:id' element={<AnimePage />}></Route>
+				<Route path='/search' element={<SearchView />}></Route>
+				<Route path='/anime/:id' element={<AnimeView />}></Route>
 			</Routes>
 		</BrowserRouter>
 	)

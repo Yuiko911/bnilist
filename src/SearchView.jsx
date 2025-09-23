@@ -3,10 +3,10 @@ import { useLocation } from "react-router-dom"
 
 import AnimeCard from './components/AnimeCard'
 
-import './SearchPage.css'
+import './SearchView.css'
 
-export default function SearchPage() {
-	
+export default function SearchView() {
+
 	const location = useLocation()
 	const urlParams = new URLSearchParams(location.search)
 	const userSearch = urlParams.get('query')
@@ -28,6 +28,7 @@ export default function SearchPage() {
 	`
 
 	let [animelist, setAnimeList] = useState(null)
+	let [requestfailure, setRequestFailure] = useState('')
 
 	useEffect(() => {
 		let ignore = false
@@ -59,19 +60,20 @@ export default function SearchPage() {
 					console.log(json['data']['Page']['media'])
 				}
 			})
+			.catch((reason) => setRequestFailure(reason))
 
 		return () => {
 			ignore = true;
 		};
 	}, [userSearch])
-	
+
 	// TODO: Better loading screen
 	if (animelist === null) return
 
 	return (
 		<>
 			<div id="cards-container">
-				{animelist.map((e, i) => <AnimeCard key={i} {...e}/>)}
+				{animelist.map((e, i) => <AnimeCard key={i} {...e} />)}
 			</div>
 		</>
 	)
