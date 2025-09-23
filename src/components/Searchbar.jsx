@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Link, useNavigate, createSearchParams } from 'react-router-dom'
 
+import './SearchBar.css'
+
 // TODO: Style
 export default function SearchBar() {
 	const [userRequest, setUserRequest] = useState('')
@@ -10,27 +12,28 @@ export default function SearchBar() {
 
 	// Auto search after timeout
 	useEffect(() => {
-		if (userRequest == "") return
+		if (userRequest.trim() == "") return
 
 		let delaySearch = setTimeout(() => {
 			navigate({
 				pathname: `/search`,
 				search: `?${createSearchParams(params)}`
 			})
-		}, 1500);
+		}, 1000);
 
 		return () => clearTimeout(delaySearch)
 	}, [userRequest])
 
-	const goToAnime = () => navigate(`/anime/${userRequest}`)
-
 	return (
 		<>
-			<nav id='searchbar'>
-				<input type="text" onChange={(e) => setUserRequest(e.target.value)} />
-
-				<button onClick={goToAnime}>Go to anime</button>
-			</nav>
+			<div id='search-bar'>
+				<div id='search-bar-left'>
+					<span id='search-bar-icon'>🔎</span>
+				</div>
+				<div id='search-bar-input'>
+					<input type="text" placeholder='Search BniList' onChange={(e) => setUserRequest(e.target.value)} />
+				</div>
+			</div>
 		</>
 	)
 }

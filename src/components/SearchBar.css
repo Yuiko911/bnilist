@@ -1,0 +1,40 @@
+
+
+#search-bar {
+	height: 50px;
+	width: 600px;
+
+	background-color: white;
+
+	border-radius: 5px;
+
+	align-items: center;
+	justify-content: flex-start;
+
+
+	display: flex;
+}
+
+#search-bar-left {
+	width: 7%;
+
+	display: flex;
+	justify-content: center;
+
+}
+
+#search-bar-input {
+	flex-grow: 1;
+}
+
+#search-bar-input > input {
+	width: 95%;
+
+	font-family: 'Overpass', Roboto, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-size: large;
+
+	color: #5C728A;
+
+	border: 0;
+	outline: 0;
+}

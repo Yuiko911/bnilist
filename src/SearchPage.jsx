@@ -14,7 +14,7 @@ export default function SearchPage() {
 	// TODO: Mettre dans un fichier à part
 	const query = `query Media($page: Int, $mediaSearch: String) {
 		Page(page: $page, perPage: 18) {
-			media(search: $mediaSearch, type: ANIME, sort: POPULARITY_DESC) {
+			media(search: $mediaSearch, type: ANIME, sort: POPULARITY_DESC, isAdult: false) {
 			id
 			title {
 				english

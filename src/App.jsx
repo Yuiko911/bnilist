@@ -11,7 +11,9 @@ function App() {
 	return (
 		<BrowserRouter>
 
-			<SearchBar></SearchBar>
+			<span id='search-bar-container'>
+				<SearchBar></SearchBar>
+			</span>
 
 			<Routes>
 				<Route path='/' element={<></>}></Route>
