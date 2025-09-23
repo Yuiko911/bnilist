@@ -11,18 +11,17 @@ export default function SearchPage() {
 	const urlParams = new URLSearchParams(location.search)
 	const userSearch = urlParams.get('query')
 
-	// TODO: Mettre dans un fichier à part
 	const query = `query Media($page: Int, $mediaSearch: String) {
 		Page(page: $page, perPage: 18) {
 			media(search: $mediaSearch, type: ANIME, sort: POPULARITY_DESC, isAdult: false) {
-			id
-			title {
-				english
-				romaji
-			}
-			coverImage {
-				large
-			}
+				id
+				title {
+					english
+					romaji
+				}
+				coverImage {
+					large
+				}
 			}
 		}
 	}
