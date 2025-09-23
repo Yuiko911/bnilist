@@ -190,7 +190,6 @@ export default function AnimePage() {
 
 					</div>
 					<div id="bottom-ranking">
-						{/* TODO: top margin */}
 						{animedata.rankings.map((ranking, i) => <RankingComponent key={i} ranking={ranking} />)}
 					</div>
 				</div>
