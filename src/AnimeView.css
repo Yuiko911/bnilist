@@ -7,8 +7,6 @@
 	font-weight: bold;
 }
 
-/* TODO: borders maybe */
-
 #top-section {
 	/* background-color: white; */
 	/* z-index: -4; */
@@ -55,7 +53,7 @@
 
 #top-background>#banner-image-container>img {
 	/* background-color: aqua; */
-
+	
 	height: 100%;
 	width: 100%;
 
@@ -133,6 +131,8 @@
 
 #top-content #top-image-container>img {
 	width: 100%;
+	border-radius: 5px;
+
 	
 }
 
@@ -248,6 +248,7 @@
 
 #bottom-timedata {
 	background-color: white;
+	border-radius: 5px;
 
 	height: 100%;
 
@@ -262,6 +263,7 @@
 
 #bottom-staff {
 	background-color: white;
+	border-radius: 5px;
 
 	height: 100%;
 	flex-basis: 60%;
