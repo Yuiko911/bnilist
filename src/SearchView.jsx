@@ -52,7 +52,6 @@ export default function SearchView() {
 
 		setAnimeList(null)
 
-		// TODO: Error handling
 		fetch('https://graphql.anilist.co', options)
 			.then(result => {
 				console.log(result)
