@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 
 import RankingComponent from "./components/RankingComponent"
 import './AnimePage.css'
+import GenreComponent from "./components/GenreComponent"
 
 export default function AnimePage() {
 	const { id } = useParams()
@@ -61,6 +62,7 @@ export default function AnimePage() {
 		`
 
 	let [animedata, setAnimeData] = useState(null)
+	let [title, setTitle] = useState('')
 
 	useEffect(() => {
 		let ignore = false
@@ -87,9 +89,10 @@ export default function AnimePage() {
 			.then((json) => {
 				if (!ignore) {
 					setAnimeData(json['data']['Media']);
+
+					setTitle(json['data']['Media'].title.english)
 				}
 			})
-
 
 		return () => {
 			ignore = true;
@@ -108,10 +111,22 @@ export default function AnimePage() {
 		return String(t).charAt(0).toUpperCase() + String(t).slice(1).toLocaleLowerCase();
 	}
 
-	let title = animedata.title.english || animedata.title.native
+	// let title = animedata.title.english || animedata.title.native
+
+	const switchTitle = () => {
+		console.log("switching")
+
+		if (animedata.title.english == null) setTitle(animedata.title.native) 
+		if (animedata.title.native == null) setTitle(animedata.title.english) 
+
+		setTitle(title == animedata.title.english ? animedata.title.native : animedata.title.english)
+	}
+
 
 	let startDate = dateAsString(animedata.startDate.day, animedata.startDate.month, animedata.startDate.year)
 	let endDate = dateAsString(animedata.endDate.day, animedata.endDate.month, animedata.endDate.year)
+
+	// TODO: Handle unreleased anime
 
 	return (
 		<>
@@ -124,20 +139,21 @@ export default function AnimePage() {
 					<div id="white-description-background"> </div>
 				</div>
 
+				{/* TODO: Content fill background */}
 				<div id="top-content">
 
-					<div id="top-image-container">
-						{/* TODO: Go to anilist on click + animation */}
+					<a id="top-image-container" style={{pointer: "clicker"}} href={`https://anilist.co/anime/${animedata.id}`}>
 						<img src={animedata.coverImage.large} alt="" />
-					</div>
+					</a>
 
 					<div id="top-info">
 						<div id="top-metadata">
 							<div id="top-name-and-studio">
-								{/* TODO: Switch title type on click */}
-								<h1>{title}</h1>
+								<h1 onClick={switchTitle}>{title}</h1>
 								<h2>{animedata.studios.edges[0] ? animedata.studios.edges[0].node.name : ""}</h2>
-								{/* TODO: Add genres */}
+								<div id="top-genres">
+									{animedata.genres.map((genre, i) => <GenreComponent key={i} name={genre}/>)}
+								</div>
 							</div>
 							<div id="top-rating">
 								<span id="top-rating-rating">⭐ {animedata.meanScore / 10}</span><span id="top-rating-outof">/10</span>
@@ -170,7 +186,7 @@ export default function AnimePage() {
 						<p className="timedata-text">{animedata.duration} minutes</p>
 					</div>
 					<div id="bottom-staff">
-						{/* <h3>Staff</h3> */}
+						{/* TODO: Staff */}
 
 					</div>
 					<div id="bottom-ranking">
@@ -187,7 +203,7 @@ export default function AnimePage() {
 function LoadingAnimePage() {
 	return (
 		<>
-		
+
 		</>
 	)
 }

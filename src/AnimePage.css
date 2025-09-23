@@ -128,10 +128,17 @@
 
 	height: 100%;
 	width: 20%;
+
 }
 
 #top-content #top-image-container>img {
 	width: 100%;
+	
+}
+
+#top-content #top-image-container>img:hover {
+	scale: 1.04;
+	transition: scale .5s ease-in-out;
 }
 
 #top-content #top-info {
@@ -154,7 +161,7 @@
 
 #top-metadata {
 	/* background-color: lime; */
-	height: 50%;
+	height: 60%;
 
 
 	padding-top: 20px;
@@ -173,10 +180,10 @@
 
 #top-name-and-studio>h1,
 #top-rating-rating {
-	/* TODO: Get correct font (Overpass) */
 	margin: 20px 0;
 	margin-bottom: 0;
 
+	font-family: 'Overpass', Roboto, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	font-weight: 700;
 	font-size: xx-large;
 
@@ -186,9 +193,9 @@
 
 #top-name-and-studio>h2,
 #top-rating-outof {
-	/* TODO: Get correct font (Overpass) */
 	margin: 0px 0;
 
+	font-family: 'Overpass', Roboto, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	font-weight: 700;
 	font-size: x-large;
 
@@ -197,19 +204,21 @@
 }
 
 #top-rating {
-	/* background-color: yellowgreen; */
-	padding-top: 20px;
+	padding-top: 30px;
 
 	height: 100%;
 	width: fit-content;
 }
 
+#top-genres {
+	display: flex;
+}
+
 #top-description {
-	/* background-color: limegreen; */
 	height: 50%;
 
-	display: flex;
-	align-items: center;
+	overflow-y: auto;
+	/* padding-top: 65px; */
 }
 
 #bottom-section {
@@ -220,10 +229,7 @@
 }
 
 #bottom-content {
-	/* background-color: aqua; */
 	min-width: 1030px;
-	/* min-height: 400px; */
-	/* max-height: 45vh; */
 
 	position: relative;
 	left: 50%;
