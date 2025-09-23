@@ -1,0 +1,19 @@
+#genre-body {
+	background-color: rgba(71, 71, 71, 0.5);
+
+
+	height: fit-content;
+	width: fit-content;
+	padding: 2px 10px;
+
+	border-radius: 25px;
+
+	margin-right: 10px;
+}
+
+#genre-body > p {
+	font-family: 'Overpass', Roboto, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	color: white;
+
+	margin: 0 0;
+}

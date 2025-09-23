@@ -1,8 +1,11 @@
-export default function GenreComponent() {
-    return (
-        <>
-		{/* TODO: This */}
-            <p>A</p>
-        </>
+import './GenreComponent.css'
+
+export default function GenreComponent({ name }) {
+	{/* TODO: This */}
+    
+	return (
+        <div id='genre-body'>
+            <p>{name}</p>
+        </div>
     )
 }
