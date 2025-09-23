@@ -10,7 +10,7 @@ export default function AnimeCard({ id, title, coverImage }) {
 	const goToAnime = () => navigate(`/anime/${id}`)
 
 	return (
-		<div id="card" onClick={goToAnime}>
+		<div id="card" onClick={goToAnime} style={{cursor: "pointer"}}>
 
 			<div id='card-background'>
 				<img src={coverImage.large} alt="" />
