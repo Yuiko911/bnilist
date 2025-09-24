@@ -5,6 +5,7 @@ import { LoadingPage, FailurePage } from "./StatusPage"
 
 import RankingComponent from "./components/RankingComponent"
 import GenreComponent from "./components/GenreComponent"
+import StaffComponent from "./components/StaffComponent"
 import './AnimeView.css'
 
 export default function AnimeView() {
@@ -60,6 +61,21 @@ export default function AnimeView() {
 		genres
 		episodes
 		duration
+
+		staff {
+			edges {
+				role
+				node {
+					id
+					name {
+						full
+					}
+					image {
+						medium
+					}
+				}
+      		}
+    	}
 	}
 }
 		`
@@ -90,16 +106,27 @@ export default function AnimeView() {
 
 		fetch('https://graphql.anilist.co', options)
 			.then(result => {
-				console.log(result)
-				if (result.ok) return result
-				else throw new Error(result.status)
+				if (result.ok) {
+					return result
+				} else {
+					console.log(result)
+					throw new Error(result.status)
+				}
 			})
 			.then(result => result.json())
 			.then((json) => {
 				if (!ignore) {
 					setAnimeData(json['data']['Media']);
+					console.log(json['data']['Media']);
 
-					setTitle(json['data']['Media'].title.english)
+					if (json['data']['Media'].title.english) {
+						setTitle(json['data']['Media'].title.english)
+						document.title = `BniList - ${json['data']['Media'].title.english}`;
+					} else {
+						setTitle(json['data']['Media'].title.native)
+						document.title = `BniList - ${json['data']['Media'].title.native}`;
+					}
+
 				}
 			})
 			.catch((reason) => {
@@ -116,7 +143,7 @@ export default function AnimeView() {
 
 	// Helper functions
 	function dateAsString(d, m, y) {
-		if (d || m || y == null) return null
+		if ((d || m || y) == null) return null
 
 		const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 		return `${d || ""} ${month[m] || ""} ${y || ""}`
@@ -126,14 +153,20 @@ export default function AnimeView() {
 		return String(t).charAt(0).toUpperCase() + String(t).slice(1).toLocaleLowerCase();
 	}
 
-	// TODO: Add romaji
 	const switchTitle = () => {
+		if (animedata.title.english == null) {
+			setTitle(animedata.title.native)
+			return
+		}
+
+		if (animedata.title.native == null) {
+			setTitle(animedata.title.english)
+			return
+		}
+
 		console.log("switching")
 
-		if (animedata.title.english == null) setTitle(animedata.title.native)
-		if (animedata.title.native == null) setTitle(animedata.title.english)
-
-		setTitle(title == animedata.title.english ? animedata.title.native : animedata.title.english)
+		setTitle((title == animedata.title.english) ? animedata.title.native : animedata.title.english)
 	}
 
 
@@ -157,7 +190,6 @@ export default function AnimeView() {
 					<div id="white-description-background"> </div>
 				</div>
 
-				{/* TODO: Content fill background */}
 				<div id="top-content">
 
 					<a id="top-image-container" style={{ pointer: "clicker" }} href={`https://anilist.co/anime/${animedata.id}`}>
@@ -165,6 +197,7 @@ export default function AnimeView() {
 					</a>
 
 					<div id="top-info">
+						<div id="top-spacer"></div>
 						<div id="top-metadata">
 							<div id="top-name-and-studio">
 								<h1 onClick={switchTitle}>{title}</h1>
@@ -178,8 +211,10 @@ export default function AnimeView() {
 							</div>
 
 						</div>
-						{/*  >:3c  */}
-						<div id="top-description" dangerouslySetInnerHTML={({ __html: animedata.description })} />
+						<div id="top-description">
+							{/*  >:3c  */}
+							<div dangerouslySetInnerHTML={({ __html: animedata.description })}></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -208,12 +243,20 @@ export default function AnimeView() {
 						</> : ""}
 					</div>
 					<div id="bottom-staff">
-						{/* TODO: Staff */}
+						<div id="bottom-staff-container">
+							{animedata.staff ? <>
+								{animedata.staff.edges.map((staff, i) => <StaffComponent key={i} id={staff.node.id} name={staff.node.name.full} image={staff.node.image.medium} role={staff.role} />)}
+							</> : <></>}
+						</div>
+
 
 					</div>
 					<div id="bottom-ranking">
-						{/* TODO: Fallback if no ranking */}
-						{animedata.rankings.map((ranking, i) => <RankingComponent key={i} ranking={ranking} />)}
+						{animedata.rankings ? <>
+							{animedata.rankings.map((ranking, i) => <RankingComponent key={i} ranking={ranking} />)}
+						</> : <>
+							<h2>No ranking</h2>
+						</>}
 					</div>
 				</div>
 			</div>

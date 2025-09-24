@@ -1,6 +1,7 @@
 :root {
 	display: flex;
 	flex-direction: column;
+
 }
 
 .bold {
@@ -30,7 +31,7 @@
 	height: 55vh;
 	width: 100vw;
 
-	position: absolute;
+	position: relative;
 	top: 0;
 	/* background-color: aqua; */
 }
@@ -98,18 +99,19 @@
 }
 
 #top-content {
-	/* background-color: aqua; */
+	/* background-color: rgb(100, 255, 216); */
+
 	min-width: 1030px;
 	min-height: 400px;
 
 
 	position: absolute;
-	top: 55%;
+	top: 0;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(-50%, 0);
 
 	width: 75%;
-	height: 80%;
+	height: 100%;
 
 	display: flex;
 	flex-flow: row;
@@ -159,12 +161,13 @@
 	flex-direction: column;
 }
 
+#top-spacer {
+	height: 20%;
+}
+
 #top-metadata {
 	/* background-color: lime; */
-	height: 60%;
-
-
-	padding-top: 20px;
+	height: 40%;
 
 	display: flex;
 	flex-direction: row;
@@ -176,11 +179,14 @@
 	/* background-color: aquamarine; */
 	height: 100%;
 	flex-grow: 1;
+
+	display: flex;
+	flex-direction: column;
 }
 
 #top-name-and-studio>h1,
 #top-rating-rating {
-	margin: 20px 0;
+	margin: 0 0;
 	margin-bottom: 0;
 
 	font-family: 'Overpass', Roboto, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -204,21 +210,25 @@
 }
 
 #top-rating {
-	padding-top: 30px;
-
 	height: 100%;
 	width: fit-content;
 }
 
 #top-genres {
 	display: flex;
+
+	position: relative;
+	margin-top: auto;
+	margin-bottom: 20px;
 }
 
 #top-description {
-	height: 50%;
-
+	height: 40%;
 	overflow-y: auto;
-	/* padding-top: 65px; */
+}
+
+#top-description>div {
+	padding-top: 15px;
 }
 
 #bottom-section {
@@ -229,6 +239,8 @@
 }
 
 #bottom-content {
+	/* background-color: bisque; */
+
 	min-width: 1030px;
 
 	position: relative;
@@ -262,13 +274,27 @@
 }
 
 #bottom-staff {
-	background-color: white;
+	/* background-color: white; */
 	border-radius: 5px;
 
 	height: 100%;
-	flex-basis: 60%;
+	flex-basis: calc(60% - 40px); /* Compensate for the padding */
 	flex-shrink: 0;
 	flex-grow: 0;
+
+	overflow-y: auto;
+}
+
+#bottom-staff-container {
+	display: grid;
+
+	grid-template-columns: repeat(auto-fill, 270px);
+	/* column-gap: 30px; */
+	row-gap: 10px;
+
+	align-content: space-around;
+	justify-content: space-between;
+
 }
 
 #bottom-ranking {

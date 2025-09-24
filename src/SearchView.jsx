@@ -35,6 +35,8 @@ export default function SearchView() {
 	useEffect(() => {
 		let ignore = false
 
+		document.title = 'BniList'
+
 		const options = {
 			method: 'POST',
 			headers: {
